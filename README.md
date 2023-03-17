@@ -48,7 +48,7 @@
 
 
 ## Queries:
-(1) Write a query to fetch the number of employees working in the department ‘Admin’. <br>
+<i>(1) Write a query to fetch the number of employees working in the department ‘Admin’.</i> <br>
 > SELECT COUNT(*) query_one_output FROM EmployeeInfo WHERE Department='Admin';
 
 <br>
@@ -57,9 +57,17 @@
   <img src="https://github.com/dev18-kapadiaa/PostgreSQL-DB-Assessment/blob/main/Query-1.png">
   <hr>
   
-  (2) Write a query to retrieve the first four characters of  EmpLname from the EmployeeInfo table.
+  <br>
+  <br>
+  <br>
+  <i>(2) Write a query to retrieve the first four characters of  EmpLname from the EmployeeInfo table.</i>
+  <br>
+  <br>
+  
  >SELECT SUBSTRING(EmpLname,1,4) AS "QUERY-2-OUTPUT" FROM EmployeeInfo;
  <br>
+ 
+ 
  Here we have used SUBSTRING function to slice the Last name. <br>
  <i>substring(str_pos , ext_char) 
  <pre> Where str_pos : Start position of string that is to be extracted, Index By default starts with 1.
@@ -71,9 +79,19 @@
 
 ![Query-2](https://user-images.githubusercontent.com/125430631/225828386-ad30526d-48a0-4aed-ad20-5777cb2d583f.png)
 
-(3) Write a query to find all the employees whose salary is between 50000 to 100000.
+<br>
+<br>
+<br>
+<i>(3) Write a query to find all the employees whose salary is between 50000 to 100000.</i>
+<br>
+<br>
+
 >SELECT * FROM EmployeeInfo NATURAL JOIN EmployeePosition WHERE Salary BETWEEN 50000 AND 100000;  <br>
+><br>
+
 ><b>Alternative-2</b>   <br>
+><br>
+
 >SELECT * FROM EmployeeInfo INNER JOIN EmployeePosition USING(EmpID) WHERE Salary BETWEEN 50000 AND 100000;  <br>
 
 Here we can use NATURAL JOIN and INNER JOIN both. NATURAL JOIN doesn't require to mention common columns on which join is supposed to apply.It by default takes common columns among both tables and join them accordingly.Here already EmpID is common in both tables.In INNER JOIN clause Joining field is required to mention using USING cluase or ON clause.
@@ -82,7 +100,12 @@ Here we can use NATURAL JOIN and INNER JOIN both. NATURAL JOIN doesn't require t
 <b> Query Output : </b>
 <img src="https://github.com/dev18-kapadiaa/PostgreSQL-DB-Assessment/blob/main/Query-3.png">
 
-(4) Write a query to find the names of employees that begin with ‘S’.
+<br>
+<br>
+<br>
+<i>(4) Write a query to find the names of employees that begin with ‘S’.</i>
+<br>
+<br>
 
 >SELECT EmpFname FROM EmployeeInfo WHERE EmpFname LIKE 'S%';
 <p> Here we will use LIKE operator. Which is similar to the comparing string patterns through which data retrieal is takes place.
@@ -93,4 +116,65 @@ Here we can use NATURAL JOIN and INNER JOIN both. NATURAL JOIN doesn't require t
  Hence,To find employees name starts with S we will use S% which will essentially fetch EmpFname which starts with S. 
  
  <b> Query Output : </b>
+ <img src = "https://github.com/dev18-kapadiaa/PostgreSQL-DB-Assessment/blob/master/Query-4.png">
  
+ <br>
+ <br>
+ <br>
+ <i>(5) Write a query to fetch top N records order by salary. (ex. top 5 records)</i>
+ <br>
+ <br>
+ 
+>SELECT * FROM EmployeePosition ORDER BY Salary LIMIT 3;
+
+Here we are selecting all the records which are ordered by Salary from the EmployeePosition table,and fetching top 3 records from them by LIMIT clause.
+We can also use FETCH Clause in this query by FETCH FIRST 3 ROWS ONLY but result will be same.
+
+<br>
+
+>SELECT * FROM EmployeePosition ORDER BY Salary FETCH FIRST 3 ROWS ONLY;
+
+<img src = "https://github.com/dev18-kapadiaa/PostgreSQL-DB-Assessment/blob/master/Query-5.png">
+<img src="https://github.com/dev18-kapadiaa/PostgreSQL-DB-Assessment/blob/master/query-5-1.png">
+
+<br>
+<br>
+<br>
+<i>(6) Write a query to fetch details of all employees excluding the employees with first names, “Sanjay” and “Sonia” from the EmployeeInfo table.</i>
+<br>
+<br>
+
+>SELECT * FROM EmployeeInfo EXCEPT SELECT * FROM EmployeeInfo WHERE EmpFname IN('Sanjay','Sonia'); <br>
+
+Here we are using EXCEPT operation in which it first select all records from EmployeeInfo table and then deleting recods which contains "Sanjay" or "Sonia" as their first name. SELECT * FROM EmployeeInfo and SELECT * FROM EmployeeInfo WHERE EmpFname IN('Sanjay','Sonia') are type compaitble hence EXCEPT operation can be performed.
+<p> Hence this will return records which are in the result of query (SELECT * FROM EmployeeInfo) and NOT in (SELECT * FROM EmployeeInfo WHERE EmpFname) IN('Sanjay','Sonia')
+ 
+<b> Query Output : </b>
+  <img src="https://github.com/dev18-kapadiaa/PostgreSQL-DB-Assessment/blob/master/Query-6.png">
+ 
+  <br>
+  <br>
+  <br>
+<i>(7) Write a query to fetch the department-wise count of employees sorted by department’s count in ascending order. </i><br> 
+  <br>
+  
+ >SELECT Department,count(*) AS dep_count FROM EmployeeInfo GROUP BY Department ORDER BY dep_count;
+  
+Here we are using GROUP BY Clause in which it creates partition/groups on the basis of Department.and count all the tuples in each department partition and returns each departments with their employee count And it is returning in ascending order by the count of employees.
+  <img src="https://github.com/dev18-kapadiaa/PostgreSQL-DB-Assessment/blob/master/Query-7.png">
+  
+ 
+  <br>
+  <br>
+  <br>
+<i>(8) Create indexing for any particular field and show the difference in data fetching before and after indexing</i>
+  <br>
+  <br>
+  
+>EXPLAIN SELECT * FROM EmployeeInfo WHERE EmpFname='Ananya'; <br>
+>CREATE INDEX index_on_first_name ON EmployeeInfo(EmpFname);  <br>
+> EXPLAIN SELECT * FROM EmployeeInfo WHERE EmpFname='Ananya';  <br>
+<img src="https://github.com/dev18-kapadiaa/PostgreSQL-DB-Assessment/blob/master/Before.png">
+<img src="https://github.com/dev18-kapadiaa/PostgreSQL-DB-Assessment/blob/master/After.png">
+  
+<p> Here we can notice that before creating index "index_on_first_name" execution time is more,and after creating index on EmployeeInfo table on the EmpFname field, our accessing time or query cost is relatively less. Hence after indexing accessing time of EmpFname ="Ananya" is less.</p>
