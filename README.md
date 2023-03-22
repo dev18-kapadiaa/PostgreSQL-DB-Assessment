@@ -7,7 +7,7 @@
 
 
 >CREATE TABLE EmployeeInfo( <br>
->EmpID SERIAL NOT NULL,   <br>
+>EmpID SERIAL NOT NULL PRIMARY KEY,   <br>
 >EmpFname VARCHAR(100), <br>
 >EmpLname VARCHAR(100) , <br>
 >Department VARCHAR(100), <br>
@@ -20,8 +20,8 @@
 >
 > INSERT into EmployeeInfo (EmpFname,EmpLname,Department,Project,Address,DOB,Gender) VALUES ('Sanjay','Mehra','HR','P1','Hyderabad(HYD)','1-12-1976' , 'M'); <br>
 >INSERT into EmployeeInfo (EmpFname,EmpLname,Department,Project,Address,DOB,Gender) VALUES ('Ananya','Mishra','Admin','P2','Delhi(DEL)','02-05-1968', 'F');  <br>
->insert into EmployeeInfo (EmpFname,EmpLname,Department,Project,Address,DOB,Gender) VALUES ('Rohan','Diwan','Account','P3','Mumbai(BOM)','01-01-1980', >'M');  <br>
->insert into EmployeeInfo (EmpFname,EmpLname,Department,Project,Address,DOB,Gender) VALUES ('Sonia','Kulkarni','HR','P1','Hyderabad(HYD)','02-05-1992', > 'F');  <br>
+>insert into EmployeeInfo (EmpFname,EmpLname,Department,Project,Address,DOB,Gender) VALUES ('Rohan','Diwan','Account','P3','Mumbai(BOM)','01-01-1980', 'M');  <br>
+>insert into EmployeeInfo (EmpFname,EmpLname,Department,Project,Address,DOB,Gender) VALUES ('Sonia','Kulkarni','HR','P1','Hyderabad(HYD)','02-05-1992',  'F');  <br>
 >insert into EmployeeInfo (EmpFname,EmpLname,Department,Project,Address,DOB,Gender) VALUES ('Ankit','Kapoor','Admin','P2','Delhi(DEL)','03-07-1994', 'M');
 
 <b>Query Output :</b>
